@@ -1,6 +1,7 @@
 import { education, jobs, profile, projects, skills } from "@/data/content";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
-const MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free";
+const MODEL = "liquid/lfm-3-1.7b:free";
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const MAX_MESSAGES = 12;
 const MAX_MESSAGE_LENGTH = 2000;
@@ -18,7 +19,15 @@ function isValidMessage(message) {
 }
 
 export async function POST(request) {
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  let apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) {
+    try {
+      apiKey = (await getCloudflareContext({ async: true })).env.OPENROUTER_API_KEY;
+    } catch (error) {
+      console.error("Could not access the Cloudflare runtime context:", error);
+    }
+  }
+
   if (!apiKey) {
     console.error("OPENROUTER_API_KEY is not configured.");
     return Response.json({ error: "سرویس گفتگو در حال حاضر پیکربندی نشده است." }, { status: 503 });

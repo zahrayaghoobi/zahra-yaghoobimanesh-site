@@ -6,9 +6,19 @@
 3. کلید OpenRouter را با نام `OPENROUTER_API_KEY` در فایل `.env` ریشه پروژه قرار دهید.
 4. `npm run dev` و سپس باز کردن http://localhost:3000
 
-گفتگوی دوقلوی دیجیتال فقط در نسخه Next.js فعال است و از مدل `nvidia/nemotron-3-ultra-550b-a55b:free` استفاده می‌کند. کلید API فقط در سرور خوانده می‌شود و نباید در کد مرورگر قرار گیرد. نسخه استاتیک ساخته‌شده با `build-static.mjs` به API گفتگو دسترسی ندارد.
+گفتگوی دوقلوی دیجیتال فقط در نسخه Next.js فعال است و از مدل `liquid/lfm-3-1.7b:free` در OpenRouter استفاده می‌کند. کلید API فقط در سرور خوانده می‌شود و نباید در کد مرورگر قرار گیرد. نسخه استاتیک ساخته‌شده با `build-static.mjs` به API گفتگو دسترسی ندارد.
 
 نسخه نهایی: `npm run build && npm start`
+
+## استقرار روی Cloudflare Workers
+این پروژه برای میزبانی Next.js و API چت از `@opennextjs/cloudflare` استفاده می‌کند.
+
+1. در داشبورد Cloudflare از بخش **Workers & Pages** یک Worker متصل به مخزن GitHub بسازید.
+2. دستور ساخت را `npm run deploy` قرار دهید و شاخه انتشار را `main` انتخاب کنید.
+3. مقدار `OPENROUTER_API_KEY` را در بخش **Settings → Variables and Secrets** به‌صورت Secret اضافه کنید؛ این کلید را در GitHub یا متغیر عمومی قرار ندهید.
+4. پس از استقرار، آدرس `*.workers.dev` را باز کنید و چت را آزمایش کنید.
+
+برای پیش‌نمایش محلی در محیط Workers از `npm run preview` استفاده کنید. فایل `.env` فقط برای اجرای محلی است و از Git مستثنا شده است.
 
 ## ویرایش محتوا
 - متن‌ها، سوابق و نمونه‌کارها: `data/content.js`

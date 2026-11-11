@@ -3,3 +3,7 @@
 node_modules/
 .next/
 out/
+.open-next/
+.wrangler/
+.dev.vars
+cloudflare-env.d.ts
